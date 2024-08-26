@@ -63,7 +63,7 @@ public class EnemyReceptorManager : MonoBehaviour
 
         if (transform.position.x < 3.64f)
         {
-            transform.position = new Vector3(3.64f, transform.position.y, transform.position.z);
+            transform.position = new Vector3(3.65f, transform.position.y, transform.position.z);
             Stay(); 
             return;
         }

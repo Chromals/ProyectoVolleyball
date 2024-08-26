@@ -2040,10 +2040,8 @@ MonoBehaviour:
   spikePoint: {fileID: 0}
   spikeRadius: 0
   ball: {fileID: 0}
-  attackMask:
-    serializedVersion: 2
-    m_Bits: 0
-  _dieAnimationTime: 0
+  spikeForceX: 0
+  spikeForceY: 0
   _isActive: 0
 --- !u!1 &778161995
 GameObject:
@@ -3468,7 +3466,7 @@ MonoBehaviour:
   dificullty: 8
   receptionForceX: -1
   receptionForceY: 2
-  force: 1.5
+  force: 3
 --- !u!70 &1139965583
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -3604,10 +3602,8 @@ MonoBehaviour:
   spikePoint: {fileID: 0}
   spikeRadius: 0
   ball: {fileID: 0}
-  attackMask:
-    serializedVersion: 2
-    m_Bits: 0
-  _dieAnimationTime: 0
+  spikeForceX: 0
+  spikeForceY: 0
   _isActive: 0
 --- !u!1 &1164112363
 GameObject:
@@ -5894,7 +5890,7 @@ MonoBehaviour:
   dificullty: 8
   smashForceX: -1
   smashForceY: 0.5
-  force: 2.2
+  force: 4
 --- !u!1 &2070511360
 GameObject:
   m_ObjectHideFlags: 0

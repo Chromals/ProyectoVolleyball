@@ -74,7 +74,7 @@ public class EnemyAttackerManager : MonoBehaviour
 
         if (transform.position.x > 2.6f)
         {
-            transform.position = new Vector3(2.6f, transform.position.y, transform.position.z);
+            transform.position = new Vector3(2.59f, transform.position.y, transform.position.z);
             Stay();
             return;
         }
