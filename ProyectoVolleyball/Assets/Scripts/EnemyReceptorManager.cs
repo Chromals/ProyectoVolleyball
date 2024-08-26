@@ -95,10 +95,10 @@ public class EnemyReceptorManager : MonoBehaviour
             ReceptionAnimation();
             Reception(); 
         }
-        else
-        {
-            StartCoroutine(DisableBallCollider());
-        }
+        //else
+        //{
+        //    StartCoroutine(DisableBallCollider());
+        //}
     }
 
     private IEnumerator DisableBallCollider()
@@ -155,7 +155,7 @@ public class EnemyReceptorManager : MonoBehaviour
         if (ballRigidbody != null)
         {
             Vector2 forceDirection = new Vector2(1.0f, 2.0f); 
-            ballRigidbody.AddForce(forceDirection * 5.0f, ForceMode2D.Impulse); 
+            ballRigidbody.AddForce(forceDirection * 3.5f, ForceMode2D.Impulse); 
         }
     }
 }
