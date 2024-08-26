@@ -1,12 +1,11 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static UnityEditor.Rendering.ShadowCascadeGUI;
 
 public class CharacterController2D : MonoBehaviour
 {
-
-
     private int ANIMATION_SPEED;
     private int ANIMATION_FORCE;
     private int ANIMATION_FALL;
@@ -14,13 +13,6 @@ public class CharacterController2D : MonoBehaviour
     private int ANIMATION_UPPERCUT;
     private int ANIMATION_DIE;
 
-    [Header("Switch Characters")]
-
-    [SerializeField]
-    public GameObject player1;
-
-    [SerializeField]
-    public GameObject ally;
 
     [Header("Movement")]
     [SerializeField]
@@ -32,7 +24,8 @@ public class CharacterController2D : MonoBehaviour
     [SerializeField]
     float gravityMultiplier;
 
-    //[SerializeField] Transform groundCheck;
+    [SerializeField]
+    Transform groundCheck;
 
     [SerializeField]
     Vector2 groundCheckSize;
@@ -56,10 +49,10 @@ public class CharacterController2D : MonoBehaviour
     [SerializeField]
     float _dieAnimationTime;
 
-    GameObject _activePlayer;
+
+
     Rigidbody2D _rigidbody;
     Animator _animator;
-    Transform _groundCheck;
 
     float _inputX;
     float _gravityY;
@@ -68,13 +61,12 @@ public class CharacterController2D : MonoBehaviour
     bool _isGrounded;
     bool _isJumpPressed;
     bool _isJumping;
+    public bool _isActive;
 
     private void Awake()
     {
-        _activePlayer = player1;
-
-        _rigidbody = _activePlayer.GetComponent<Rigidbody2D>();
-        _animator = _activePlayer.GetComponentInChildren<Animator>();
+        _rigidbody = GetComponent<Rigidbody2D>();
+        _animator = GetComponentInChildren<Animator>();
 
         _gravityY = Physics2D.gravity.y;
         ANIMATION_SPEED = Animator.StringToHash("speed");
@@ -83,8 +75,6 @@ public class CharacterController2D : MonoBehaviour
         ANIMATION_PUNCH = Animator.StringToHash("punch");
         ANIMATION_DIE = Animator.StringToHash("die");
         ANIMATION_UPPERCUT = Animator.StringToHash("uppercut");
-
-        AssignControl(_activePlayer);
     }
 
     private void Start()
@@ -96,7 +86,6 @@ public class CharacterController2D : MonoBehaviour
     {
         HandleGravity();
         HandleInputMove();
-        HandleCharacterSwitch();
     }
 
 
@@ -107,58 +96,6 @@ public class CharacterController2D : MonoBehaviour
         HandleRotate();
         HandleMove();
     }
-
-    private void AssignControl(GameObject player)
-    {
-        if (_activePlayer != null)
-        {
-            var previousRigidbody = _activePlayer.GetComponent<Rigidbody2D>();
-            previousRigidbody.velocity = new Vector2(0.0f, -1.0F);
-            previousRigidbody.angularVelocity = 0.0f; // Detener la rotación
-
-            previousRigidbody.simulated = true;
-            previousRigidbody.isKinematic = false;
-        }
-
-        _activePlayer = player;
-        _rigidbody = _activePlayer.GetComponent<Rigidbody2D>();
-        _animator = _activePlayer.GetComponentInChildren<Animator>();
-
-        player1.GetComponent<Rigidbody2D>().isKinematic = _activePlayer != player1;
-        ally.GetComponent<Rigidbody2D>().isKinematic = _activePlayer != ally;
-
-        _rigidbody.simulated = true;
-        // Asignar el GroundCheck del nuevo personaje
-        _groundCheck = _activePlayer.transform.Find("GroundCheck");
-
-        // Restablecer el input y la velocidad vertical
-        _inputX = 0.0f;
-        _velocityY = 0.0f;
-
-        // Verificar y corregir la posición del personaje si está por debajo del suelo
-        if (_groundCheck != null && !IsGrounded())
-        {
-            _rigidbody.position = new Vector2(_rigidbody.position.x, 0.0F); // Ajusta el valor Y según sea necesario
-        }
-    }
-
-    private void HandleCharacterSwitch()
-    {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            if (_activePlayer == player1)
-            {
-                player1.GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, player1.GetComponent<Rigidbody2D>().velocity.y);
-                AssignControl(ally);
-            }
-            else
-            {
-                ally.GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, ally.GetComponent<Rigidbody2D>().velocity.y);
-                AssignControl(player1);
-            }
-        }
-    }
-
 
     private void HandleJump()
     {
@@ -200,20 +137,6 @@ public class CharacterController2D : MonoBehaviour
             StartCoroutine(WaitForGroundedCoroutine());
     }
 
-    private bool IsGrounded()
-    {
-        Collider2D collider2D =
-            Physics2D.OverlapBox(_groundCheck.position, groundCheckSize, 0.0F, groundMask);
-        return collider2D != null;
-    }
-
-    private IEnumerator WaitForGroundedCoroutine()
-    {
-        yield return new WaitUntil(() => !IsGrounded());
-        yield return new WaitUntil(() => IsGrounded());
-        _isGrounded = true;
-    }
-
     private void HandleGravity()
     {
         //print("velocity: " + _velocityY + "   //// IsGrounded: " + _isGrounded + "//// isJumping: " + _isJumping);
@@ -228,24 +151,30 @@ public class CharacterController2D : MonoBehaviour
 
     private void HandleImputJump()
     {
+        if (!_isActive)
+            return;
         _isJumpPressed = Input.GetButton("Jump");
     }
 
     public void HandleMove()
-    {
+    {   if (!_isActive)
+            return;
         float speed = _inputX != 0.0F ? 1.0F : 0.0F;
         float animatorSpeed = _animator.GetFloat(ANIMATION_SPEED);
 
         if (speed != animatorSpeed)
             _animator.SetFloat(ANIMATION_SPEED, speed);
 
-        Vector2 velocity = new Vector2(_inputX, 0.0F) * walkSpeed * Time.fixedDeltaTime;
+        Vector2 velocity = new Vector2(_inputX, 0.0F) * walkSpeed * Time.fixedDeltaTime; ;
         velocity.y = _velocityY;
+        //print("velocity: " + velocity.y);
         _rigidbody.velocity = velocity;
     }
 
     public void HandleInputMove()
     {
+        if(!_isActive) return;
+
         _inputX = Input.GetAxisRaw("Horizontal");
     }
 
@@ -257,13 +186,23 @@ public class CharacterController2D : MonoBehaviour
         if (isFacingRight != facingRight)
         {
             isFacingRight = facingRight;
-            _activePlayer.transform.Rotate(0.0F, 180.0F, 0.0F);
+            transform.Rotate(0.0F, 180.0F, 0.0F);
         }
     }
 
-    
+    private bool IsGrounded()
+    {
+        Collider2D collider2D =
+            Physics2D.OverlapBox(groundCheck.position, groundCheckSize, 0.0F, groundMask);
+        return collider2D != null;
+    }
 
-   
+    private IEnumerator WaitForGroundedCoroutine()
+    {
+        yield return new WaitUntil(() => !IsGrounded());
+        yield return new WaitUntil(() => IsGrounded());
+        _isGrounded = true;
+    }
 
     public void Punch(float damage, bool isPercentage)
     {
@@ -287,6 +226,8 @@ public class CharacterController2D : MonoBehaviour
 
     }
 
+    
+
     public void Die()
     {
         StartCoroutine(DieCoroutine());
@@ -301,5 +242,3 @@ public class CharacterController2D : MonoBehaviour
     }
 
 }
-
-
