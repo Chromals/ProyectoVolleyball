@@ -168,6 +168,7 @@ GameObject:
   - component: {fileID: 64667625}
   - component: {fileID: 64667624}
   - component: {fileID: 64667623}
+  - component: {fileID: 64667626}
   m_Layer: 6
   m_Name: Left
   m_TagString: Untagged
@@ -397,6 +398,21 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &64667626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 64667621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad45b11f833f1104b8332c7c1e1b2478, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isPlayer1Zone: 1
+  startPointP1: {fileID: 1505011038}
+  startPointP2: {fileID: 916036259}
 --- !u!1 &98912624
 GameObject:
   m_ObjectHideFlags: 0
@@ -409,6 +425,7 @@ GameObject:
   - component: {fileID: 98912627}
   - component: {fileID: 98912628}
   - component: {fileID: 98912626}
+  - component: {fileID: 98912629}
   m_Layer: 6
   m_Name: Right
   m_TagString: Untagged
@@ -652,6 +669,21 @@ TilemapRenderer:
   m_Mode: 0
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
+--- !u!114 &98912629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 98912624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad45b11f833f1104b8332c7c1e1b2478, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isPlayer1Zone: 0
+  startPointP1: {fileID: 1505011038}
+  startPointP2: {fileID: 916036259}
 --- !u!1 &184205592
 GameObject:
   m_ObjectHideFlags: 0
@@ -1252,7 +1284,7 @@ GameObject:
   - component: {fileID: 561854675}
   m_Layer: 6
   m_Name: Grid
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1297,7 +1329,7 @@ GameObject:
   - component: {fileID: 574378667}
   m_Layer: 0
   m_Name: Avatar
-  m_TagString: Untagged
+  m_TagString: Ball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1408,7 +1440,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "0\x03"
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc0bcbfa80910465da77e65a1d76a0a0, type: 2}
   m_sharedMaterial: {fileID: 2627763512869155993, guid: dc0bcbfa80910465da77e65a1d76a0a0, type: 2}
@@ -2090,7 +2122,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 1:00
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc0bcbfa80910465da77e65a1d76a0a0, type: 2}
   m_sharedMaterial: {fileID: 2627763512869155993, guid: dc0bcbfa80910465da77e65a1d76a0a0, type: 2}
@@ -2117,8 +2149,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 48
-  m_fontSizeBase: 48
+  m_fontSize: 44
+  m_fontSizeBase: 44
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2153,7 +2185,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0.076934814, w: 0}
+  m_margin: {x: -2.322998, y: 0, z: -3.9055252, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -2817,7 +2849,7 @@ GameObject:
   - component: {fileID: 1164112365}
   m_Layer: 0
   m_Name: Ball
-  m_TagString: Untagged
+  m_TagString: Ball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3811,7 +3843,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1395404399
 Transform:
   m_ObjectHideFlags: 0
@@ -4083,6 +4115,8 @@ GameObject:
   - component: {fileID: 1666609583}
   - component: {fileID: 1666609582}
   - component: {fileID: 1666609581}
+  - component: {fileID: 1666609585}
+  - component: {fileID: 1666609586}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -4173,6 +4207,34 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1666609585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1666609580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 792c2dd8ad7af5648a6dd85926faff06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreP1Text: {fileID: 576266283}
+  scoreP2Text: {fileID: 2070511362}
+--- !u!114 &1666609586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1666609580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84011ee26bed1ae49b3f5ba6194ebf1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timerText: {fileID: 1113326529}
+  remainingTime: 20
 --- !u!1 &1674961272
 GameObject:
   m_ObjectHideFlags: 0
@@ -4324,7 +4386,7 @@ GameObject:
   - component: {fileID: 1716934139}
   m_Layer: 0
   m_Name: Ball
-  m_TagString: Untagged
+  m_TagString: Ball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4337,7 +4399,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1716934136}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.04, y: 2.16, z: 0}
+  m_LocalPosition: {x: -0.77, y: 2.16, z: 0}
   m_LocalScale: {x: 0.5521, y: 0.5521, z: 0.5521}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4713,7 +4775,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "0\x03"
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc0bcbfa80910465da77e65a1d76a0a0, type: 2}
   m_sharedMaterial: {fileID: 2627763512869155993, guid: dc0bcbfa80910465da77e65a1d76a0a0, type: 2}
