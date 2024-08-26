@@ -2262,6 +2262,7 @@ GameObject:
   - component: {fileID: 1116919143}
   - component: {fileID: 1116919144}
   - component: {fileID: 1116919145}
+  - component: {fileID: 1116919146}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -2357,6 +2358,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1116919146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1116919142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ff883c9406930e40b0089c71f796e66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1132992243
 GameObject:
   m_ObjectHideFlags: 0
@@ -4304,7 +4317,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1666609580}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 84011ee26bed1ae49b3f5ba6194ebf1d, type: 3}
   m_Name: 
@@ -4785,7 +4798,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ballTracking: {fileID: 1716934138}
   walkSpeed: 300
-  jumpForce: 5.5
+  jumpForce: 7.5
   gravityMultiplier: 1.5
   groundCheck: {fileID: 328867459}
   groundCheckSize: {x: 0.62991077, y: 0.015041947}

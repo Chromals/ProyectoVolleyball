@@ -8,6 +8,8 @@ public class EnemyTracker : MonoBehaviour
     private int ANIMATION_SPEED;
     private int ANIMATION_FORCE;
     private int ANIMATION_FALL;
+    private int ANIMATION_SMASH;
+    private int ANIMATION_RECEPTION;
 
     [Header("Tracking")]
     [SerializeField]
@@ -41,6 +43,7 @@ public class EnemyTracker : MonoBehaviour
 
     bool _isGrounded;
     bool _isJumping;
+    bool _actionJump;
 
     private void Awake()
     {
@@ -52,6 +55,8 @@ public class EnemyTracker : MonoBehaviour
         ANIMATION_SPEED = Animator.StringToHash("speed");
         ANIMATION_FORCE = Animator.StringToHash("force");
         ANIMATION_FALL = Animator.StringToHash("fall");
+        ANIMATION_SMASH = Animator.StringToHash("smash");
+        ANIMATION_RECEPTION = Animator.StringToHash("reception");
     }
 
     private void Start()
@@ -61,16 +66,28 @@ public class EnemyTracker : MonoBehaviour
 
     private void Update()
     {
+
         HandleGravity();
-        
+        if (Input.GetKeyDown(KeyCode.Space)) 
+        { 
+            Jump();
+        }
+    
     }
     private void FixedUpdate()
     {
         AiController();
+       
+       
     }
     private void AiController()
     {
         Vector3 tmp = ballTracking.position;
+
+        float distanceY = Mathf.Abs(tmp.y - transform.position.y);
+
+        // Imprime la diferencia vertical en la consola
+        Debug.Log($"Diferencia Vertical: {distanceY}");
 
         if (tmp.x > 0 && Mathf.Abs(tmp.x - transform.position.x) > 0.3f)
         {
@@ -86,8 +103,8 @@ public class EnemyTracker : MonoBehaviour
             if (Mathf.Abs(tmp.y - transform.position.y) > 1.5f &&
                 Mathf.Abs(tmp.y - transform.position.y) < 4f && tmp.x < 1.75f)
             {
-                Debug.Log("Estoy saltando");
-                Debug.Log($"IsGrounded: {_isGrounded}, VelocityY: {_velocityY}");
+                //Debug.Log("Estoy saltando");
+                //Debug.Log($"IsGrounded: {_isGrounded}, VelocityY: {_velocityY} ,actionJump :{_actionJump}");
                 Jump();
             }
         }
@@ -143,7 +160,10 @@ public class EnemyTracker : MonoBehaviour
             _isJumping = true;
 
             _velocityY = jumpForce;
+            _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, _velocityY);
+
             _animator.SetTrigger(ANIMATION_FORCE);
+
             StartCoroutine(WaitForGroundedCoroutine());
         }
     }
@@ -153,7 +173,7 @@ public class EnemyTracker : MonoBehaviour
         _animator.SetFloat(ANIMATION_SPEED, speed);
 
         Vector2 velocity = new Vector2(-1.0F, 0.0F) * walkSpeed * Time.fixedDeltaTime;
-        velocity.y = _velocityY;
+        velocity.y = _rigidbody.velocity.y; 
 
         _rigidbody.velocity = velocity;
     }
@@ -164,10 +184,11 @@ public class EnemyTracker : MonoBehaviour
         _animator.SetFloat(ANIMATION_SPEED, speed);
 
         Vector2 velocity = new Vector2(1.0F, 0.0F) * walkSpeed * Time.fixedDeltaTime;
-        velocity.y = _velocityY;
+        velocity.y = _rigidbody.velocity.y; 
 
         _rigidbody.velocity = velocity;
     }
+
     private void Stay()
     {
         _rigidbody.velocity = new Vector2(0.0f, _rigidbody.velocity.y);
@@ -188,10 +209,20 @@ public class EnemyTracker : MonoBehaviour
         yield return new WaitUntil(() => IsGrounded());
         _isGrounded = true;
     }
-
+    private void SmashAnimation ()
+    {
+        _animator.SetTrigger(ANIMATION_SMASH);
+    }
     private void Smash()
     {
-    
+       
     }
+    private void ReceptionAnimation()
+    {
+        _animator.SetTrigger(ANIMATION_RECEPTION);
+    }
+    private void Reception ()
+    {
 
+    }
 }
