@@ -7,7 +7,6 @@ public class EnemyReceptorManager : MonoBehaviour
 {
     private int ANIMATION_SPEED;
     private int ANIMATION_FORCE;
-    private int ANIMATION_FALL;
     private int ANIMATION_SMASH;
     private int ANIMATION_RECEPTION;
 
@@ -20,12 +19,6 @@ public class EnemyReceptorManager : MonoBehaviour
     float walkSpeed;
 
     [SerializeField]
-    float jumpForce;
-
-    [SerializeField]
-    float gravityMultiplier;
-
-    [SerializeField]
     Transform groundCheck;
 
     [SerializeField]
@@ -34,142 +27,104 @@ public class EnemyReceptorManager : MonoBehaviour
     [SerializeField]
     LayerMask groundMask;
 
-
     Rigidbody2D _rigidbody;
     Animator _animator;
 
-    float _gravityY;
-    float _velocityY;
-
-    bool _isGrounded;
-    bool _isJumping;
-    bool _actionJump;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
         _animator = GetComponentInChildren<Animator>();
 
-        _gravityY = Physics2D.gravity.y;
 
         ANIMATION_SPEED = Animator.StringToHash("speed");
         ANIMATION_FORCE = Animator.StringToHash("force");
-        ANIMATION_FALL = Animator.StringToHash("fall");
         ANIMATION_SMASH = Animator.StringToHash("smash");
         ANIMATION_RECEPTION = Animator.StringToHash("reception");
     }
 
-    private void Start()
-    {
-        HandleGrounded();
-    }
 
-    private void Update()
-    {
-        HandleGravity();
-        if (Input.GetKeyDown(KeyCode.Space)) 
-        { 
-            Jump();
-        }
-    }
     private void FixedUpdate()
     {
         AiController();
     }
+
     private void AiController()
     {
         Vector3 tmp = ballTracking.position;
 
-        float distanceY = Mathf.Abs(tmp.y - transform.position.y);
 
-        // Imprime la diferencia vertical en la consola
-        Debug.Log($"Diferencia Vertical: {distanceY}");
-
-        if (tmp.x > 0 && Mathf.Abs(tmp.x - transform.position.x) > 0.3f)
+        if (transform.position.x < 3.64f)
         {
-            if (tmp.x > transform.position.x)
-            {
-                MoveRight();
-            }
-            else if (tmp.x < transform.position.x)
-            {
-                MoveLeft();
-            }
-
-            if (Mathf.Abs(tmp.y - transform.position.y) > 1.5f &&
-                Mathf.Abs(tmp.y - transform.position.y) < 4f && tmp.x < 1.75f)
-            {
-                //Debug.Log("Estoy saltando");
-                //Debug.Log($"IsGrounded: {_isGrounded}, VelocityY: {_velocityY} ,actionJump :{_actionJump}");
-                Jump();
-            }
+            transform.position = new Vector3(3.64f, transform.position.y, transform.position.z);
+            Stay(); 
+            return;
         }
-        else if ((tmp.x > 0 && Mathf.Abs(tmp.x - transform.position.x) <= 0.3f) || (tmp.x <= 0 && tmp.x >= -0.6f))
+
+        if (tmp.x > 2.6f)
         {
-            Stay();
-        }
-        else if (tmp.x < -0.6f)
-        {
-            if (transform.position.x < 3.75f)
+            if (Mathf.Abs(tmp.x - transform.position.x) > 0.3f)
             {
-                MoveRight();
-            }
-            else if (transform.position.x > 4.1f)
-            {
-                MoveLeft();
+                if (tmp.x > transform.position.x)
+                {
+                    MoveRight();
+                }
+                else if (tmp.x < transform.position.x)
+                {
+                    MoveLeft();
+                }
             }
             else
             {
                 Stay();
             }
+
+            // Al llegar a la bola, intentar la recepción
+            if (Mathf.Abs(tmp.x - transform.position.x) <= 0.3f && Mathf.Abs(tmp.y - transform.position.y) < 1.5f)
+            {
+                TryReception();
+            }
         }
         else
         {
-            Stay();
+            Stay();  
         }
     }
-    private void HandleGravity()
+
+    private void TryReception()
     {
-        if (_isGrounded)
+        int randomValue = UnityEngine.Random.Range(1, 10);
+
+        if (randomValue > 5)
         {
-            if (_velocityY < -1.0F)
-            {
-                _velocityY = -1.0F;
-            }
+            ReceptionAnimation();
+            Reception(); 
+        }
+        else
+        {
+            StartCoroutine(DisableBallCollider());
         }
     }
 
-    private void HandleGrounded()
+    private IEnumerator DisableBallCollider()
     {
-        _isGrounded = IsGrounded();
-        if (!_isGrounded)
+        Collider2D ballCollider = ballTracking.GetComponent<Collider2D>();
+
+        if (ballCollider != null)
         {
-            StartCoroutine(WaitForGroundedCoroutine());
+            ballCollider.enabled = false;
+            yield return new WaitForSeconds(0.5f);
+            ballCollider.enabled = true;
         }
     }
 
-    public void Jump()
-    {
-        if (_isGrounded)
-        {
-            _isGrounded = false;
-            _isJumping = true;
-
-            _velocityY = jumpForce;
-            _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, _velocityY);
-
-            _animator.SetTrigger(ANIMATION_FORCE);
-
-            StartCoroutine(WaitForGroundedCoroutine());
-        }
-    }
     private void MoveLeft()
     {
         float speed = 1.0F;
         _animator.SetFloat(ANIMATION_SPEED, speed);
 
         Vector2 velocity = new Vector2(-1.0F, 0.0F) * walkSpeed * Time.fixedDeltaTime;
-        velocity.y = _rigidbody.velocity.y; 
+        velocity.y = _rigidbody.velocity.y;
 
         _rigidbody.velocity = velocity;
     }
@@ -180,7 +135,7 @@ public class EnemyReceptorManager : MonoBehaviour
         _animator.SetFloat(ANIMATION_SPEED, speed);
 
         Vector2 velocity = new Vector2(1.0F, 0.0F) * walkSpeed * Time.fixedDeltaTime;
-        velocity.y = _rigidbody.velocity.y; 
+        velocity.y = _rigidbody.velocity.y;
 
         _rigidbody.velocity = velocity;
     }
@@ -191,34 +146,21 @@ public class EnemyReceptorManager : MonoBehaviour
 
         _animator.SetFloat(ANIMATION_SPEED, 0.0f);
     }
-  
 
-    private bool IsGrounded()
-    {
-        Collider2D collider2D = Physics2D.OverlapBox(groundCheck.position, groundCheckSize, 0.0F, groundMask);
-        return collider2D != null;
-    }
 
-    private IEnumerator WaitForGroundedCoroutine()
-    {
-        yield return new WaitUntil(() => !IsGrounded());
-        yield return new WaitUntil(() => IsGrounded());
-        _isGrounded = true;
-    }
-    private void SmashAnimation ()
-    {
-        _animator.SetTrigger(ANIMATION_SMASH);
-    }
-    private void Smash()
-    {
-       
-    }
     private void ReceptionAnimation()
     {
         _animator.SetTrigger(ANIMATION_RECEPTION);
     }
-    private void Reception ()
-    {
 
+    private void Reception()
+    {
+        Rigidbody2D ballRigidbody = ballTracking.GetComponent<Rigidbody2D>();
+
+        if (ballRigidbody != null)
+        {
+            Vector2 forceDirection = new Vector2(1.0f, 2.0f); 
+            ballRigidbody.AddForce(forceDirection * 5.0f, ForceMode2D.Impulse); 
+        }
     }
 }
