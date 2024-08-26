@@ -1,6 +1,5 @@
 using UnityEngine;
 using TMPro;
-using UnityEngine.SceneManagement;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -77,11 +76,11 @@ public class ScoreManager : MonoBehaviour
     {
         if (setsP1 >= targetSets)
         {
-            SceneManager.LoadScene("Winner");
+            LevelManager.Instance.LoadWinnerScene();
         }
         else if (setsP2 >= targetSets)
         {
-            SceneManager.LoadScene("Game Over");
+            LevelManager.Instance.LoadGameOverScene();
         }
     }
 

@@ -6,8 +6,6 @@ public class CharacterListener : MonoBehaviour
 {
     private CharacterController2D _character;
 
-    [SerializeField]
-    float force;
 
     private void Awake()
     {
@@ -17,9 +15,12 @@ public class CharacterListener : MonoBehaviour
 
     public void OnSpike()
     {
-        _character.Spike(force);
+        _character.Spike();
     }
-
+    public void OnReception() 
+    { 
+    
+    }
     
 
 }

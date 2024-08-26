@@ -46,11 +46,19 @@ public class SoundManager : MonoBehaviour
 
         _musicSource = gameObject.AddComponent<AudioSource>();
         _musicSource.volume = 0.2F;
-        musicSlider.value = 0.2F;
 
         _sfxSource = gameObject.AddComponent<AudioSource>();
         _sfxSource.volume = 0.2F;
-        sfxSlider.value = 0.2F;
+
+        if (musicSlider != null)
+        {
+            musicSlider.value = 0.2F;
+        }
+
+        if (sfxSlider != null)
+        {
+            sfxSlider.value = 0.2F;
+        }
     }
 
     public static SoundManager Instance
@@ -67,7 +75,6 @@ public class SoundManager : MonoBehaviour
     {
         return Array.Find(sounds, s => s.GetName().Equals(name, StringComparison.OrdinalIgnoreCase));
     }
-
 
     #region Play
     public void PlayMusic(string name)
@@ -101,7 +108,6 @@ public class SoundManager : MonoBehaviour
         {
             _sfxSource.PlayOneShot(sfx.GetAudio());
         }
-
     }
     #endregion
 
@@ -111,34 +117,32 @@ public class SoundManager : MonoBehaviour
     {
         _isMusicMuted = !_isMusicMuted;
         _musicSource.volume = _isMusicMuted ? 0F : 1F;
-        musicSlider.value = _isMusicMuted ? 0F : 1F;
 
-        if (_isMusicMuted)
+        if (musicSlider != null)
         {
-            musicButton.GetComponent<Image>().sprite = musicMutedSprite;
-        }
-        else
-        {
-            musicButton.GetComponent<Image>().sprite = musicUnmutedSprite;
+            musicSlider.value = _isMusicMuted ? 0F : 1F;
         }
 
+        if (musicButton != null)
+        {
+            musicButton.GetComponent<Image>().sprite = _isMusicMuted ? musicMutedSprite : musicUnmutedSprite;
+        }
     }
 
     public void MuteUnMuteSFX()
     {
         _isSfxMuted = !_isSfxMuted;
         _sfxSource.volume = _isSfxMuted ? 0F : 1F;
-        sfxSlider.value = _isSfxMuted ? 0F : 1F;
 
-        if (_isSfxMuted)
+        if (sfxSlider != null)
         {
-            sfxButton.GetComponent<Image>().sprite = sfxMutedSprite;
-        }
-        else
-        {
-            sfxButton.GetComponent<Image>().sprite = sfxUnmutedSprite;
+            sfxSlider.value = _isSfxMuted ? 0F : 1F;
         }
 
+        if (sfxButton != null)
+        {
+            sfxButton.GetComponent<Image>().sprite = _isSfxMuted ? sfxMutedSprite : sfxUnmutedSprite;
+        }
     }
 
     #endregion
@@ -147,34 +151,50 @@ public class SoundManager : MonoBehaviour
 
     public void SetMusicVolume()
     {
-        _musicSource.volume = musicSlider.value;
-        if (musicSlider.value == 0F)
+        if (musicSlider != null)
         {
-            _isMusicMuted = true;
-            musicButton.GetComponent<Image>().sprite = musicMutedSprite;
-        }
-        if (musicSlider.value == 1F)
-        {
-            _isMusicMuted = false;
-            musicButton.GetComponent<Image>().sprite = musicUnmutedSprite;
+            _musicSource.volume = musicSlider.value;
+            if (musicSlider.value == 0F)
+            {
+                _isMusicMuted = true;
+                if (musicButton != null)
+                {
+                    musicButton.GetComponent<Image>().sprite = musicMutedSprite;
+                }
+            }
+            if (musicSlider.value == 1F)
+            {
+                _isMusicMuted = false;
+                if (musicButton != null)
+                {
+                    musicButton.GetComponent<Image>().sprite = musicUnmutedSprite;
+                }
+            }
         }
     }
 
     public void SetSFXVolume()
     {
-        _sfxSource.volume = sfxSlider.value;
-        if (sfxSlider.value == 0F)
+        if (sfxSlider != null)
         {
-            _isSfxMuted = true;
-            sfxButton.GetComponent<Image>().sprite = sfxMutedSprite;
-        }
-        if (sfxSlider.value == 1F)
-        {
-            _isMusicMuted = false;
-            sfxButton.GetComponent<Image>().sprite = sfxUnmutedSprite;
+            _sfxSource.volume = sfxSlider.value;
+            if (sfxSlider.value == 0F)
+            {
+                _isSfxMuted = true;
+                if (sfxButton != null)
+                {
+                    sfxButton.GetComponent<Image>().sprite = sfxMutedSprite;
+                }
+            }
+            if (sfxSlider.value == 1F)
+            {
+                _isSfxMuted = false;
+                if (sfxButton != null)
+                {
+                    sfxButton.GetComponent<Image>().sprite = sfxUnmutedSprite;
+                }
+            }
         }
     }
     #endregion
-
-    
 }

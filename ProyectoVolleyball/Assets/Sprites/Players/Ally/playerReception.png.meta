@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b02a1db1fde415c48a96e9f7dd71b331
+guid: 9f44b7a45fb920345a03a5e06f52f540
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -107,8 +107,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8c2d26989dff55f4fb9a13698dee9e93
-      internalID: 31710914
+      spriteID: 4b4d8716fb6c09345b7ba9cb4a0eb13b
+      internalID: 358142022
       vertices: []
       indices: 
       edges: []
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e861cc90e63b16e45b69196f717d9620
-      internalID: 1941781502
+      spriteID: 3d98bf52242f4f746a1ee49a1554a2a4
+      internalID: -558544326
       vertices: []
       indices: 
       edges: []
@@ -149,8 +149,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fb4d51a50201f9449b902fbdcc7c730f
-      internalID: -2097522502
+      spriteID: b148909006fa9354ea045ec5b4c13713
+      internalID: -207363790
       vertices: []
       indices: 
       edges: []
@@ -170,8 +170,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c921c0adcdc4dbd449331dd4d2cf227c
-      internalID: -893578311
+      spriteID: 72e5423fbfe1d5f4ca31611c6b25744e
+      internalID: 1393238922
       vertices: []
       indices: 
       edges: []
@@ -191,8 +191,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9a24837fb751f5f4eb1fbd9e700ed595
-      internalID: 445235215
+      spriteID: 97bd6e60c6c08864b8afe071dbf02751
+      internalID: 235441307
       vertices: []
       indices: 
       edges: []
@@ -212,8 +212,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d48389f4de56dd5428c22194a18fe3a8
-      internalID: 1399641508
+      spriteID: 9a088029fd2f5414ba569b13538a65a9
+      internalID: -1564006048
       vertices: []
       indices: 
       edges: []
@@ -233,8 +233,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a503a7e3fbc6f4643b59b71463b8b2b2
-      internalID: 1170101508
+      spriteID: 992d0cfc19a3b8d4d9b933be735fb059
+      internalID: -698681038
       vertices: []
       indices: 
       edges: []
@@ -254,8 +254,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 47a71a0b547417c4f99ec8d3f838e2c8
-      internalID: -451683323
+      spriteID: 5b8249e2c14c259408f9aeb7fb665f18
+      internalID: 877038602
       vertices: []
       indices: 
       edges: []
@@ -275,8 +275,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 133385fd18022424385609898e891f11
-      internalID: 2003807467
+      spriteID: 29d37f23ae73f1b40b7f929d3b8bb75a
+      internalID: -1199463485
       vertices: []
       indices: 
       edges: []
@@ -296,8 +296,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c133092df8278f849a81aaa313fb133a
-      internalID: -708670745
+      spriteID: 489fab169fa50d0439502fce8c7b7277
+      internalID: -725156486
       vertices: []
       indices: 
       edges: []
@@ -317,8 +317,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b52c82a6e5c7e8d4ca9e507800f4e334
-      internalID: -914720915
+      spriteID: efecabf020213da4e92176043632b0f9
+      internalID: -168196895
       vertices: []
       indices: 
       edges: []
@@ -334,17 +334,17 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      playerReception_0: 31710914
-      playerReception_1: 1941781502
-      playerReception_10: -914720915
-      playerReception_2: -2097522502
-      playerReception_3: -893578311
-      playerReception_4: 445235215
-      playerReception_5: 1399641508
-      playerReception_6: 1170101508
-      playerReception_7: -451683323
-      playerReception_8: 2003807467
-      playerReception_9: -708670745
+      playerReception_0: 358142022
+      playerReception_1: -558544326
+      playerReception_10: -168196895
+      playerReception_2: -207363790
+      playerReception_3: 1393238922
+      playerReception_4: 235441307
+      playerReception_5: -1564006048
+      playerReception_6: -698681038
+      playerReception_7: 877038602
+      playerReception_8: -1199463485
+      playerReception_9: -725156486
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -47,16 +47,11 @@ public class CharacterController2D : MonoBehaviour
     float spikeRadius;
 
     [SerializeField] 
-    GameObject ball;
-
-
-    [Header("Attacks")]
+    Transform ball;
     [SerializeField]
-    LayerMask attackMask;
-
+    float spikeForceX;
     [SerializeField]
-    float _dieAnimationTime;
-
+    float spikeForceY;
 
 
     Rigidbody2D _rigidbody;
@@ -79,12 +74,9 @@ public class CharacterController2D : MonoBehaviour
         _gravityY = Physics2D.gravity.y;
         ANIMATION_SPEED = Animator.StringToHash("speed");
         ANIMATION_FORCE = Animator.StringToHash("force");
-        ANIMATION_SPIKE = Animator.StringToHash("spike"); // Rema
+        ANIMATION_SPIKE = Animator.StringToHash("smash"); // Rema
 
         ANIMATION_FALL = Animator.StringToHash("fall");
-        ANIMATION_PUNCH = Animator.StringToHash("punch");
-        ANIMATION_DIE = Animator.StringToHash("die");
-        ANIMATION_UPPERCUT = Animator.StringToHash("uppercut");
     }
 
     private void Start()
@@ -219,40 +211,22 @@ public class CharacterController2D : MonoBehaviour
         _isGrounded = true;
     }
 
-    public void Spike(float force)
+    public void Spike()
     {
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(spikePoint.position, spikeRadius, attackMask);
-        foreach (Collider2D collider in colliders)
+        Rigidbody2D ballRigidbody = ball.GetComponent<Rigidbody2D>();
+
+        if (ballRigidbody != null)
         {
-            //DamageableController controller = collider.GetComponent<DamageableController>();
-
-            //if (controller == null)
-            //    continue;
-
-            //controller.TakeDamage(damage, isPercentage);
+            Vector2 forceDirection = new Vector2(spikeForceX, spikeForceY);
+            ballRigidbody.AddForce(forceDirection, ForceMode2D.Impulse);
         }
 
     }
 
-    public void Spike()
+    public void SpikeAnimation()
     {
         if (!_isActive) return;
         _animator.SetTrigger(ANIMATION_SPIKE);
-    }
-
-    
-
-    public void Die()
-    {
-        StartCoroutine(DieCoroutine());
-    }
-
-    private IEnumerator DieCoroutine()
-    {
-        _animator.SetTrigger(ANIMATION_DIE);
-        yield return new WaitForSeconds(_dieAnimationTime);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-
     }
 
 }
