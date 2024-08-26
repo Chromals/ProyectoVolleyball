@@ -2221,6 +2221,7 @@ MonoBehaviour:
   setsText: {fileID: 1857262519}
   pointsText: {fileID: 127610846}
   timeText: {fileID: 133233858}
+  selectedButtonSprite: {fileID: 21300000, guid: d8fc404036a434cd28d1fa4225d25845, type: 3}
 --- !u!1 &583915878
 GameObject:
   m_ObjectHideFlags: 0
