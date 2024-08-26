@@ -11,7 +11,7 @@ public class Timer : MonoBehaviour
 
     void Start()
     {
-        remainingTime = PlayerPrefs.GetInt("SelectedTime", 5) * 60;
+        remainingTime = PlayerPrefs.GetInt("SelectedTime", 2) * 60;
     }
 
     void Update()
