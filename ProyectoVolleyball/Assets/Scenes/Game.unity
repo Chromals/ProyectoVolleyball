@@ -1954,7 +1954,7 @@ GameObject:
   - component: {fileID: 774077019}
   - component: {fileID: 774077020}
   - component: {fileID: 774077021}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player-1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2028,14 +2028,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeed: 250
-  jumpForce: 10
+  jumpForce: 7
   gravityMultiplier: 1.5
   groundCheck: {fileID: 1739240148}
   groundCheckSize: {x: 0.7, y: 0.02}
   groundMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 192
   isFacingRight: 1
+  spikeAcceleration: 0
+  spikePoint: {fileID: 0}
+  ball: {fileID: 0}
   punchPoint: {fileID: 0}
   punchRadius: 0
   attackMask:
@@ -2473,6 +2476,7 @@ GameObject:
   - component: {fileID: 994699395}
   - component: {fileID: 994699397}
   - component: {fileID: 994699396}
+  - component: {fileID: 994699398}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -2568,6 +2572,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &994699398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 994699394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b74fbb6f24dc9fd42afbd907ce23a331, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  force: 5
 --- !u!1 &1040994307
 GameObject:
   m_ObjectHideFlags: 0
@@ -3499,7 +3516,7 @@ GameObject:
   - component: {fileID: 1153077741}
   - component: {fileID: 1153077740}
   - component: {fileID: 1153077742}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Ally
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3573,14 +3590,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeed: 250
-  jumpForce: 10
+  jumpForce: 7
   gravityMultiplier: 1.5
   groundCheck: {fileID: 1326413694}
   groundCheckSize: {x: 0.7, y: 0.02}
   groundMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 192
   isFacingRight: 1
+  spikeAcceleration: 0
+  spikePoint: {fileID: 0}
+  ball: {fileID: 0}
   punchPoint: {fileID: 0}
   punchRadius: 0
   attackMask:

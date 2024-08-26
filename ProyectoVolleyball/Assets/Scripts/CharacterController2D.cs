@@ -12,7 +12,7 @@ public class CharacterController2D : MonoBehaviour
     private int ANIMATION_PUNCH;
     private int ANIMATION_UPPERCUT;
     private int ANIMATION_DIE;
-
+    private int ANIMATION_SPIKE;
 
     [Header("Movement")]
     [SerializeField]
@@ -36,13 +36,21 @@ public class CharacterController2D : MonoBehaviour
     [SerializeField]
     bool isFacingRight;
 
+    [Header("Spike")]
+    [SerializeField] 
+    float spikeAcceleration; // Fuerza para aplicar en el remate
+
+    [SerializeField] 
+    Transform spikePoint; // Punto de origen del remate
+
+    [SerializeField]
+    float spikeRadius;
+
+    [SerializeField] 
+    GameObject ball;
+
+
     [Header("Attacks")]
-    [SerializeField]
-    Transform punchPoint;
-
-    [SerializeField]
-    float punchRadius;
-
     [SerializeField]
     LayerMask attackMask;
 
@@ -71,6 +79,8 @@ public class CharacterController2D : MonoBehaviour
         _gravityY = Physics2D.gravity.y;
         ANIMATION_SPEED = Animator.StringToHash("speed");
         ANIMATION_FORCE = Animator.StringToHash("force");
+        ANIMATION_SPIKE = Animator.StringToHash("spike"); // Rema
+
         ANIMATION_FALL = Animator.StringToHash("fall");
         ANIMATION_PUNCH = Animator.StringToHash("punch");
         ANIMATION_DIE = Animator.StringToHash("die");
@@ -96,6 +106,7 @@ public class CharacterController2D : MonoBehaviour
         HandleRotate();
         HandleMove();
     }
+
 
     private void HandleJump()
     {
@@ -158,7 +169,11 @@ public class CharacterController2D : MonoBehaviour
 
     public void HandleMove()
     {   if (!_isActive)
+        {
+            _animator.SetFloat(ANIMATION_SPEED, 0);
             return;
+        }
+            
         float speed = _inputX != 0.0F ? 1.0F : 0.0F;
         float animatorSpeed = _animator.GetFloat(ANIMATION_SPEED);
 
@@ -204,9 +219,9 @@ public class CharacterController2D : MonoBehaviour
         _isGrounded = true;
     }
 
-    public void Punch(float damage, bool isPercentage)
+    public void Spike(float force)
     {
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(punchPoint.position, punchRadius, attackMask);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(spikePoint.position, spikeRadius, attackMask);
         foreach (Collider2D collider in colliders)
         {
             //DamageableController controller = collider.GetComponent<DamageableController>();
@@ -219,11 +234,10 @@ public class CharacterController2D : MonoBehaviour
 
     }
 
-    public void Punch()
+    public void Spike()
     {
-        _animator.SetTrigger(ANIMATION_PUNCH);
-
-
+        if (!_isActive) return;
+        _animator.SetTrigger(ANIMATION_SPIKE);
     }
 
     
