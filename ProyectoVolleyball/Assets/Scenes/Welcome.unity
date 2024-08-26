@@ -8722,6 +8722,22 @@ PrefabInstance:
       propertyPath: musicSlider
       value: 
       objectReference: {fileID: 137721123}
+    - target: {fileID: 6422650441325979542, guid: 466c9628081dc9846ba5256819acc763, type: 3}
+      propertyPath: sfxMutedSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 762b22a4a34604f3ca7754f2e50053b6, type: 3}
+    - target: {fileID: 6422650441325979542, guid: 466c9628081dc9846ba5256819acc763, type: 3}
+      propertyPath: musicMutedSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: a443311f7872b486599f096442fdefc3, type: 3}
+    - target: {fileID: 6422650441325979542, guid: 466c9628081dc9846ba5256819acc763, type: 3}
+      propertyPath: sfxUnmutedSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 019835c26cb7c48f883fceddba2867af, type: 3}
+    - target: {fileID: 6422650441325979542, guid: 466c9628081dc9846ba5256819acc763, type: 3}
+      propertyPath: musicUnmutedSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: f267dab9941014d5a855d1baae797daa, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 466c9628081dc9846ba5256819acc763, type: 3}
 --- !u!1001 &8714719085331083340
