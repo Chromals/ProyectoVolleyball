@@ -6,8 +6,6 @@ using UnityEngine;
 public class EnemyReceptorManager : MonoBehaviour
 {
     private int ANIMATION_SPEED;
-    private int ANIMATION_FORCE;
-    private int ANIMATION_SMASH;
     private int ANIMATION_RECEPTION;
 
     [Header("Tracking")]
@@ -38,8 +36,6 @@ public class EnemyReceptorManager : MonoBehaviour
 
 
         ANIMATION_SPEED = Animator.StringToHash("speed");
-        ANIMATION_FORCE = Animator.StringToHash("force");
-        ANIMATION_SMASH = Animator.StringToHash("smash");
         ANIMATION_RECEPTION = Animator.StringToHash("reception");
     }
 
@@ -79,7 +75,6 @@ public class EnemyReceptorManager : MonoBehaviour
                 Stay();
             }
 
-            // Al llegar a la bola, intentar la recepción
             if (Mathf.Abs(tmp.x - transform.position.x) <= 0.3f && Mathf.Abs(tmp.y - transform.position.y) < 1.5f)
             {
                 TryReception();
@@ -94,7 +89,7 @@ public class EnemyReceptorManager : MonoBehaviour
     private void TryReception()
     {
         int randomValue = UnityEngine.Random.Range(1, 10);
-
+        Debug.Log($"randomvalue: {randomValue}");
         if (randomValue > 5)
         {
             ReceptionAnimation();
