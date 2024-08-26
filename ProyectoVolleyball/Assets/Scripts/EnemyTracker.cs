@@ -84,68 +84,54 @@ public class EnemyTracker : MonoBehaviour
     {
         Vector3 tmp = ballTracking.position;
 
-        // Calcular las diferencias
         float distanceY = Mathf.Abs(tmp.y - transform.position.y);
-        float distanceX = Mathf.Abs(tmp.x - transform.position.x);
 
-        // Imprimir las diferencias en la consola para depuración
-        //Debug.Log($"Diferencia Vertical: {distanceY} ||| Diferencia Horizontal: {distanceX}");
+        // Imprime la diferencia vertical en la consola
+        Debug.Log($"Diferencia Vertical: {distanceY}");
 
-        if (tmp.x > 0 && distanceX > 0.3f)
+        if (tmp.x > 0 && Mathf.Abs(tmp.x - transform.position.x) > 0.3f)
+        {
+            if (tmp.x > transform.position.x)
             {
-                if (tmp.x > transform.position.x)
-                {
-                    MoveRight();
-                }
-                else if (tmp.x < transform.position.x)
-                {
-                    MoveLeft();
-                }
-
-                if (distanceY > 1.5f && distanceY < 4f && tmp.x < 1.75f)
-                {
-                    Jump();
-                }
-                if (distanceY < 1.2f )
-                {
-                    Debug.Log("Estoy cerca!");
-                    if (_isGrounded)
-                    {
-                        Debug.Log("Realizo accion!");
-                        ReceptionAnimation();
-                    }
-                    else if (!_isGrounded)
-                    {
-                        SmashAnimation();   
-                    }   
-
-                }
+                MoveRight();
             }
-            else if ((tmp.x > 0 && distanceX <= 0.3f) || (tmp.x <= 0 && tmp.x >= -0.6f))
+            else if (tmp.x < transform.position.x)
             {
-                Stay();
+                MoveLeft();
             }
-            else if (tmp.x < -0.6f)
+
+            if (Mathf.Abs(tmp.y - transform.position.y) > 1.5f &&
+                Mathf.Abs(tmp.y - transform.position.y) < 4f && tmp.x < 1.75f)
             {
-                if (transform.position.x < 3.75f)
-                {
-                    MoveRight();
-                }
-                else if (transform.position.x > 4.1f)
-                {
-                    MoveLeft();
-                }
-                else
-                {
-                    Stay();
-                }
+                //Debug.Log("Estoy saltando");
+                //Debug.Log($"IsGrounded: {_isGrounded}, VelocityY: {_velocityY} ,actionJump :{_actionJump}");
+                Jump();
+            }
+        }
+        else if ((tmp.x > 0 && Mathf.Abs(tmp.x - transform.position.x) <= 0.3f) || (tmp.x <= 0 && tmp.x >= -0.6f))
+        {
+            Stay();
+        }
+        else if (tmp.x < -0.6f)
+        {
+            if (transform.position.x < 3.75f)
+            {
+                MoveRight();
+            }
+            else if (transform.position.x > 4.1f)
+            {
+                MoveLeft();
             }
             else
             {
                 Stay();
             }
+        }
+        else
+        {
+            Stay();
+        }
     }
-
     private void HandleGravity()
     {
         if (_isGrounded)

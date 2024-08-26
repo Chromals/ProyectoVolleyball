@@ -4379,13 +4379,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1666609580}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 84011ee26bed1ae49b3f5ba6194ebf1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   timerText: {fileID: 1113326529}
-  remainingTime: 200
+  remainingTime: 20
 --- !u!1 &1674961272
 GameObject:
   m_ObjectHideFlags: 0
@@ -4550,7 +4550,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1716934136}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.1, y: 2.12, z: 0}
+  m_LocalPosition: {x: -0.77, y: 2.16, z: 0}
   m_LocalScale: {x: 0.5521, y: 0.5521, z: 0.5521}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4578,7 +4578,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 2
+  m_Constraints: 0
 --- !u!58 &1716934140
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -4890,7 +4890,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballTracking: {fileID: 1716934138}
-  walkSpeed: 250
+  walkSpeed: 300
   jumpForce: 7.5
   gravityMultiplier: 1.5
   groundCheck: {fileID: 328867459}
