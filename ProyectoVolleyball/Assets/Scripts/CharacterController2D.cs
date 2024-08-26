@@ -37,11 +37,11 @@ public class CharacterController2D : MonoBehaviour
     bool isFacingRight;
 
     [Header("Spike")]
-    [SerializeField] 
-    float spikeAcceleration; // Fuerza para aplicar en el remate
+    [SerializeField]
+    float spikeAcceleration; 
 
-    [SerializeField] 
-    Transform spikePoint; // Punto de origen del remate
+    [SerializeField]
+    Transform spikePoint; 
 
     [SerializeField]
     float spikeRadius;
@@ -53,6 +53,9 @@ public class CharacterController2D : MonoBehaviour
     [SerializeField]
     float spikeForceY;
 
+    [Header("Attacks")]
+    [SerializeField]
+    LayerMask attackMask;
 
     Rigidbody2D _rigidbody;
     Animator _animator;
@@ -61,7 +64,7 @@ public class CharacterController2D : MonoBehaviour
     float _gravityY;
     float _velocityY;
 
-    bool _isGrounded;
+    public bool _isGrounded;
     bool _isJumpPressed;
     bool _isJumping;
     public bool _isActive;
@@ -160,12 +163,13 @@ public class CharacterController2D : MonoBehaviour
     }
 
     public void HandleMove()
-    {   if (!_isActive)
+    {
+        if (!_isActive)
         {
             _animator.SetFloat(ANIMATION_SPEED, 0);
             return;
         }
-            
+
         float speed = _inputX != 0.0F ? 1.0F : 0.0F;
         float animatorSpeed = _animator.GetFloat(ANIMATION_SPEED);
 
@@ -180,7 +184,7 @@ public class CharacterController2D : MonoBehaviour
 
     public void HandleInputMove()
     {
-        if(!_isActive) return;
+        if (!_isActive) return;
 
         _inputX = Input.GetAxisRaw("Horizontal");
     }
@@ -213,13 +217,21 @@ public class CharacterController2D : MonoBehaviour
 
     public void Spike()
     {
-        Rigidbody2D ballRigidbody = ball.GetComponent<Rigidbody2D>();
 
-        if (ballRigidbody != null)
+
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(spikePoint.position, spikeRadius, attackMask);
+        foreach (Collider2D collider in colliders)
         {
-            Vector2 forceDirection = new Vector2(spikeForceX, spikeForceY);
-            ballRigidbody.AddForce(forceDirection, ForceMode2D.Impulse);
+            if (collider.gameObject.CompareTag("Ball"))
+            {
+                Rigidbody2D ballRigidbody = collider.GetComponent<Rigidbody2D>();
+                Vector2 forceDirection = new Vector2(spikeForceX, spikeForceY);
+                ballRigidbody.AddForce(forceDirection, ForceMode2D.Impulse);
+
+                break;
+            }
         }
+
 
     }
 
