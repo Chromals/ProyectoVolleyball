@@ -1786,6 +1786,7 @@ GameObject:
   - component: {fileID: 774077018}
   - component: {fileID: 774077019}
   - component: {fileID: 774077020}
+  - component: {fileID: 774077021}
   m_Layer: 0
   m_Name: Player-1
   m_TagString: Untagged
@@ -1847,6 +1848,34 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.9201071, y: 1.6629817}
   m_Direction: 0
+--- !u!114 &774077021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 774077016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ac0b2727431d9c4ba1e8a036e3b3ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walkSpeed: 250
+  jumpForce: 10
+  gravityMultiplier: 1.5
+  groundCheck: {fileID: 1739240148}
+  groundCheckSize: {x: 0.7, y: 0.02}
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 64
+  isFacingRight: 1
+  punchPoint: {fileID: 0}
+  punchRadius: 0
+  attackMask:
+    serializedVersion: 2
+    m_Bits: 0
+  _dieAnimationTime: 0
+  _isActive: 0
 --- !u!1 &778161995
 GameObject:
   m_ObjectHideFlags: 0
@@ -1890,25 +1919,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 778161995}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ac0b2727431d9c4ba1e8a036e3b3ee6, type: 3}
+  m_Script: {fileID: 11500000, guid: 09adbc308e1ea5347b62c135c806af0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player1: {fileID: 774077016}
-  ally: {fileID: 1153077738}
-  walkSpeed: 250
-  jumpForce: 10
-  gravityMultiplier: 1.5
-  groundCheckSize: {x: 0.7, y: 0.02}
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 64
-  isFacingRight: 1
-  punchPoint: {fileID: 0}
-  punchRadius: 0.25
-  attackMask:
-    serializedVersion: 2
-    m_Bits: 0
-  _dieAnimationTime: 1
+  player1: {fileID: 774077021}
+  ally: {fileID: 1153077742}
 --- !u!1 &902344016
 GameObject:
   m_ObjectHideFlags: 0
@@ -2872,6 +2887,7 @@ GameObject:
   - component: {fileID: 1153077739}
   - component: {fileID: 1153077741}
   - component: {fileID: 1153077740}
+  - component: {fileID: 1153077742}
   m_Layer: 0
   m_Name: Ally
   m_TagString: Untagged
@@ -2933,6 +2949,34 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!114 &1153077742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1153077738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ac0b2727431d9c4ba1e8a036e3b3ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walkSpeed: 250
+  jumpForce: 10
+  gravityMultiplier: 1.5
+  groundCheck: {fileID: 1326413694}
+  groundCheckSize: {x: 0.7, y: 0.02}
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 64
+  isFacingRight: 1
+  punchPoint: {fileID: 0}
+  punchRadius: 0
+  attackMask:
+    serializedVersion: 2
+    m_Bits: 0
+  _dieAnimationTime: 0
+  _isActive: 0
 --- !u!1 &1164112363
 GameObject:
   m_ObjectHideFlags: 0
