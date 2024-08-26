@@ -34,7 +34,8 @@ public class MenuManager : MonoBehaviour
         gameWelcomePanel.SetActive(true);
         UpdateGameWelcomeTexts();
 
-        // Guardar el tiempo seleccionado en PlayerPrefs
+        PlayerPrefs.SetInt("SelectedSets", selectedSets);
+        PlayerPrefs.SetInt("SelectedPoints", selectedPoints);
         PlayerPrefs.SetInt("SelectedTime", selectedTime);
         PlayerPrefs.Save();
     }

@@ -11,8 +11,7 @@ public class Timer : MonoBehaviour
 
     void Start()
     {
-        // Cargar el tiempo seleccionado desde PlayerPrefs
-        remainingTime = PlayerPrefs.GetInt("SelectedTime", 5) * 60; // Multiplicamos por 60 para convertirlo en segundos
+        remainingTime = PlayerPrefs.GetInt("SelectedTime", 5) * 60;
     }
 
     void Update()
@@ -36,7 +35,6 @@ public class Timer : MonoBehaviour
 
     private void GameOver()
     {
-        // Llamar al método del ScoreManager para manejar el final del tiempo
         ScoreManager.instance.HandleTimeEnd();
     }
 }
