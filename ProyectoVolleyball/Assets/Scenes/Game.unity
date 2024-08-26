@@ -5785,12 +5785,13 @@ MonoBehaviour:
   ballTracking: {fileID: 1716934138}
   walkSpeed: 300
   jumpForce: 7.5
-  gravityMultiplier: 1.5
   groundCheck: {fileID: 328867459}
   groundCheckSize: {x: 0.62991077, y: 0.015041947}
   groundMask:
     serializedVersion: 2
     m_Bits: 64
+  smashForceX: 0
+  smashForceY: 0
 --- !u!1 &2070511360
 GameObject:
   m_ObjectHideFlags: 0

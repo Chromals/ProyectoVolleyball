@@ -51,6 +51,18 @@ public class LevelManager : MonoBehaviour
         SceneManager.LoadScene(level);
     }
 
+    public void LoadWinnerScene()
+    {
+        int winnerSceneIndex = 2; 
+        LoadLevel(winnerSceneIndex);
+    }
+
+    public void LoadGameOverScene()
+    {
+        int gameOverSceneIndex = 3; 
+        LoadLevel(gameOverSceneIndex);
+    }
+
     public void Quit()
     {
         Application.Quit();
