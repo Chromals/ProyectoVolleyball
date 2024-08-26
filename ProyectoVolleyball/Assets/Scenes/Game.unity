@@ -2028,7 +2028,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeed: 250
-  jumpForce: 7
+  jumpForce: 8.5
   gravityMultiplier: 1.5
   groundCheck: {fileID: 1739240148}
   groundCheckSize: {x: 0.7, y: 0.02}
@@ -2038,9 +2038,8 @@ MonoBehaviour:
   isFacingRight: 1
   spikeAcceleration: 0
   spikePoint: {fileID: 0}
+  spikeRadius: 0
   ball: {fileID: 0}
-  punchPoint: {fileID: 0}
-  punchRadius: 0
   attackMask:
     serializedVersion: 2
     m_Bits: 0
@@ -3424,7 +3423,7 @@ GameObject:
   - component: {fileID: 1139965584}
   - component: {fileID: 1139965583}
   - component: {fileID: 1139965582}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy-2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3467,6 +3466,10 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 64
+  dificullty: 8
+  receptionForceX: -1
+  receptionForceY: 2
+  force: 1.5
 --- !u!70 &1139965583
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -3590,7 +3593,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeed: 250
-  jumpForce: 7
+  jumpForce: 8.5
   gravityMultiplier: 1.5
   groundCheck: {fileID: 1326413694}
   groundCheckSize: {x: 0.7, y: 0.02}
@@ -3600,9 +3603,8 @@ MonoBehaviour:
   isFacingRight: 1
   spikeAcceleration: 0
   spikePoint: {fileID: 0}
+  spikeRadius: 0
   ball: {fileID: 0}
-  punchPoint: {fileID: 0}
-  punchRadius: 0
   attackMask:
     serializedVersion: 2
     m_Bits: 0
@@ -5809,7 +5811,7 @@ GameObject:
   - component: {fileID: 2066687665}
   - component: {fileID: 2066687664}
   - component: {fileID: 2066687666}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy-1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5890,8 +5892,10 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 64
-  smashForceX: 0
-  smashForceY: 0
+  dificullty: 8
+  smashForceX: -1
+  smashForceY: 0.5
+  force: 2.2
 --- !u!1 &2070511360
 GameObject:
   m_ObjectHideFlags: 0

@@ -25,6 +25,17 @@ public class EnemyReceptorManager : MonoBehaviour
     [SerializeField]
     LayerMask groundMask;
 
+    [SerializeField]
+    int dificullty;
+
+    [Header("Reception")]
+    [SerializeField]
+    float receptionForceX;
+    [SerializeField]
+    float receptionForceY;
+    [SerializeField]
+    float force;
+
     Rigidbody2D _rigidbody;
     Animator _animator;
 
@@ -57,27 +68,19 @@ public class EnemyReceptorManager : MonoBehaviour
             return;
         }
 
-        if (tmp.x > 2.6f)
+        if (tmp.x > 2.6  && tmp.x < 7.0)
         {
-            if (Mathf.Abs(tmp.x - transform.position.x) > 0.3f)
+            if (tmp.x > transform.position.x)
             {
-                if (tmp.x > transform.position.x)
-                {
-                    MoveRight();
-                }
-                else if (tmp.x < transform.position.x)
-                {
-                    MoveLeft();
-                }
+                MoveRight();
+            }
+            else if (tmp.x < transform.position.x)
+            {
+                MoveLeft();
             }
             else
             {
                 Stay();
-            }
-
-            if (Mathf.Abs(tmp.x - transform.position.x) <= 0.3f && Mathf.Abs(tmp.y - transform.position.y) < 1.5f)
-            {
-                TryReception();
             }
         }
         else
@@ -86,30 +89,41 @@ public class EnemyReceptorManager : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ball"))
+        {
+            TryReception();
+        }
+    }
+
     private void TryReception()
     {
         int randomValue = UnityEngine.Random.Range(1, 10);
         Debug.Log($"randomvalue: {randomValue}");
-        if (randomValue > 5)
+        if (randomValue < dificullty)
         {
+            Reception();
             ReceptionAnimation();
-            Reception(); 
         }
-        //else
-        //{
-        //    StartCoroutine(DisableBallCollider());
-        //}
+        else
+        {
+            StartCoroutine(IgnoreCollisionWithBallTemporarily());
+        }
     }
 
-    private IEnumerator DisableBallCollider()
+    private IEnumerator IgnoreCollisionWithBallTemporarily()
     {
+        Collider2D playerCollider = GetComponent<Collider2D>();
         Collider2D ballCollider = ballTracking.GetComponent<Collider2D>();
 
-        if (ballCollider != null)
+        if (playerCollider != null && ballCollider != null)
         {
-            ballCollider.enabled = false;
+            Physics2D.IgnoreCollision(playerCollider, ballCollider, true);
+
             yield return new WaitForSeconds(0.5f);
-            ballCollider.enabled = true;
+
+            Physics2D.IgnoreCollision(playerCollider, ballCollider, false);
         }
     }
 
@@ -154,8 +168,8 @@ public class EnemyReceptorManager : MonoBehaviour
 
         if (ballRigidbody != null)
         {
-            Vector2 forceDirection = new Vector2(1.0f, 2.0f); 
-            ballRigidbody.AddForce(forceDirection * 3.5f, ForceMode2D.Impulse); 
+            Vector2 forceDirection = new Vector2(receptionForceX, receptionForceY); 
+            ballRigidbody.AddForce(forceDirection * force, ForceMode2D.Impulse); 
         }
     }
 }

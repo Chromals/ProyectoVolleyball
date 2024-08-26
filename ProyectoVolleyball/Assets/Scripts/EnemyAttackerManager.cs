@@ -28,11 +28,17 @@ public class EnemyAttackerManager : MonoBehaviour
 
     [SerializeField]
     LayerMask groundMask;
+
+    [SerializeField]
+    int dificullty;
+
     [Header("Smash")]
     [SerializeField]
-    private float smashForceX;
+    float smashForceX;
     [SerializeField]
-    private float smashForceY;
+    float smashForceY;
+    [SerializeField]
+    float force;
 
     Rigidbody2D _rigidbody;
     Animator _animator;
@@ -65,10 +71,6 @@ public class EnemyAttackerManager : MonoBehaviour
     private void AiController()
     {
         Vector3 tmp = ballTracking.position;
-        float distanceY = Mathf.Abs(tmp.y - transform.position.y);
-        float distanceX = Mathf.Abs(tmp.x - transform.position.x);
-        Debug.Log($"Diferencia Vertical: {distanceY} |||| Diferencia Horizontal: {distanceY}");
-
 
         if (transform.position.x > 2.6f)
         {
@@ -77,7 +79,7 @@ public class EnemyAttackerManager : MonoBehaviour
             return;
         }
 
-        if (tmp.x > 0 && Mathf.Abs(tmp.x - transform.position.x) > 0.3f)
+        if (tmp.x > 0 && tmp.x < 2.6)
         {
             if (tmp.x > transform.position.x)
             {
@@ -92,10 +94,6 @@ public class EnemyAttackerManager : MonoBehaviour
                 Mathf.Abs(tmp.y - transform.position.y) < 4f && tmp.x < 1.75f)
             {
                 Jump();
-                if (!_isGrounded) 
-                {
-                    TrySmash();
-                }
             }
         }
         else
@@ -138,19 +136,42 @@ public class EnemyAttackerManager : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ball") && !_isGrounded)
+        {
+            TrySmash();
+        }
+    }
+
     private void TrySmash()
     {
         int randomValue = UnityEngine.Random.Range(1, 10);
         Debug.Log($"randomvalue: {randomValue}");
-        if (randomValue > 5)
+        if (randomValue < dificullty)
         {
-            SmashAnimation();
             Smash();
+            SmashAnimation();            
         }
-        //else
-        //{
-        //    StartCoroutine(DisableBallColliderTemporarily());
-        //}
+        else
+        {
+            StartCoroutine(IgnoreCollisionWithBallTemporarily());
+        }
+    }
+
+    private IEnumerator IgnoreCollisionWithBallTemporarily()
+    {
+        Collider2D playerCollider = GetComponent<Collider2D>();
+        Collider2D ballCollider = ballTracking.GetComponent<Collider2D>();
+
+        if (playerCollider != null && ballCollider != null)
+        {
+            Physics2D.IgnoreCollision(playerCollider, ballCollider, true);
+
+            yield return new WaitForSeconds(0.5f); 
+
+            Physics2D.IgnoreCollision(playerCollider, ballCollider, false);
+        }
     }
 
     private void MoveLeft()
@@ -192,34 +213,11 @@ public class EnemyAttackerManager : MonoBehaviour
 
         if (ballRigidbody != null)
         {
-            Vector2 forceDirection = new Vector2(smashForceX, smashForceY);
+            Vector2 forceDirection = new Vector2(smashForceX, smashForceY) * force;
             ballRigidbody.AddForce(forceDirection, ForceMode2D.Impulse);
         }
     }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Ball") && _isGrounded)
-        {
-            Rigidbody2D ballRigidbody = collision.gameObject.GetComponent<Rigidbody2D>();
-            if (ballRigidbody != null)
-            {
-                Vector2 forceDirection = new Vector2(0.5f, 0.5f); 
-                ballRigidbody.AddForce(forceDirection, ForceMode2D.Impulse);
-            }
-        }
-    }
-
-    private IEnumerator DisableBallColliderTemporarily()
-    {
-        Collider2D ballCollider = ballTracking.GetComponent<Collider2D>();
-        if (ballCollider != null)
-        {
-            ballCollider.enabled = false; 
-            yield return new WaitForSeconds(0.5f);
-            ballCollider.enabled = true; 
-        }
-    }
-
+    
     private bool IsGrounded()
     {
         Collider2D collider2D = Physics2D.OverlapBox(groundCheck.position, groundCheckSize, 0.0F, groundMask);
