@@ -28,6 +28,11 @@ public class EnemyAttackerManager : MonoBehaviour
 
     [SerializeField]
     LayerMask groundMask;
+    [Header("Smash")]
+    [SerializeField]
+    private float smashForceX;
+    [SerializeField]
+    private float smashForceY;
 
     Rigidbody2D _rigidbody;
     Animator _animator;
@@ -44,7 +49,14 @@ public class EnemyAttackerManager : MonoBehaviour
         ANIMATION_FORCE = Animator.StringToHash("force");
         ANIMATION_SMASH = Animator.StringToHash("smash");
     }
-
+    private void Start()
+    {
+        HandleGrounded();
+    }
+    private void Update()
+    {
+        HandleGravity();
+    }
     private void FixedUpdate()
     {
         AiController();
@@ -53,6 +65,10 @@ public class EnemyAttackerManager : MonoBehaviour
     private void AiController()
     {
         Vector3 tmp = ballTracking.position;
+        float distanceY = Mathf.Abs(tmp.y - transform.position.y);
+        float distanceX = Mathf.Abs(tmp.x - transform.position.x);
+        Debug.Log($"Diferencia Vertical: {distanceY} |||| Diferencia Horizontal: {distanceY}");
+
 
         if (transform.position.x > 2.6f)
         {
@@ -73,10 +89,13 @@ public class EnemyAttackerManager : MonoBehaviour
             }
 
             if (Mathf.Abs(tmp.y - transform.position.y) > 1.5f &&
-                Mathf.Abs(tmp.y - transform.position.y) < 4f)
+                Mathf.Abs(tmp.y - transform.position.y) < 4f && tmp.x < 1.75f)
             {
                 Jump();
-                TrySmash();
+                if (!_isGrounded) 
+                {
+                    TrySmash();
+                }
             }
         }
         else
@@ -84,17 +103,38 @@ public class EnemyAttackerManager : MonoBehaviour
             Stay();
         }
     }
+    private void HandleGravity()
+    {
+        if (_isGrounded)
+        {
+            if (_velocityY < -1.0F)
+            {
+                _velocityY = -1.0F;
+            }
+        }
+    }
 
-    private void Jump()
+    private void HandleGrounded()
+    {
+        _isGrounded = IsGrounded();
+        if (!_isGrounded)
+        {
+            StartCoroutine(WaitForGroundedCoroutine());
+        }
+    }
+    public void Jump()
     {
         if (_isGrounded)
         {
             _isGrounded = false;
+            
 
             _velocityY = jumpForce;
             _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, _velocityY);
 
             _animator.SetTrigger(ANIMATION_FORCE);
+
+            StartCoroutine(WaitForGroundedCoroutine());
         }
     }
 
@@ -105,12 +145,12 @@ public class EnemyAttackerManager : MonoBehaviour
         if (randomValue > 5)
         {
             SmashAnimation();
-            Smash(ballTracking.gameObject);
+            Smash();
         }
-        else
-        {
-            StartCoroutine(DisableBallColliderTemporarily());
-        }
+        //else
+        //{
+        //    StartCoroutine(DisableBallColliderTemporarily());
+        //}
     }
 
     private void MoveLeft()
@@ -146,9 +186,27 @@ public class EnemyAttackerManager : MonoBehaviour
         _animator.SetTrigger(ANIMATION_SMASH);
     }
 
-    private void Smash(GameObject ball)
+    private void Smash()
     {
+        Rigidbody2D ballRigidbody = ballTracking.GetComponent<Rigidbody2D>();
 
+        if (ballRigidbody != null)
+        {
+            Vector2 forceDirection = new Vector2(smashForceX, smashForceY);
+            ballRigidbody.AddForce(forceDirection, ForceMode2D.Impulse);
+        }
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ball") && _isGrounded)
+        {
+            Rigidbody2D ballRigidbody = collision.gameObject.GetComponent<Rigidbody2D>();
+            if (ballRigidbody != null)
+            {
+                Vector2 forceDirection = new Vector2(0.5f, 0.5f); 
+                ballRigidbody.AddForce(forceDirection, ForceMode2D.Impulse);
+            }
+        }
     }
 
     private IEnumerator DisableBallColliderTemporarily()
@@ -166,5 +224,11 @@ public class EnemyAttackerManager : MonoBehaviour
     {
         Collider2D collider2D = Physics2D.OverlapBox(groundCheck.position, groundCheckSize, 0.0F, groundMask);
         return collider2D != null;
+    }
+    private IEnumerator WaitForGroundedCoroutine()
+    {
+        yield return new WaitUntil(() => !IsGrounded());
+        yield return new WaitUntil(() => IsGrounded());
+        _isGrounded = true;
     }
 }
