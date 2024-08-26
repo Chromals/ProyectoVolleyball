@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyTracker : MonoBehaviour
+public class EnemyAtackerManager : MonoBehaviour
 {
     private int ANIMATION_SPEED;
     private int ANIMATION_FORCE;
@@ -66,19 +66,15 @@ public class EnemyTracker : MonoBehaviour
 
     private void Update()
     {
-
         HandleGravity();
         if (Input.GetKeyDown(KeyCode.Space)) 
         { 
             Jump();
         }
-    
     }
     private void FixedUpdate()
     {
         AiController();
-       
-       
     }
     private void AiController()
     {
