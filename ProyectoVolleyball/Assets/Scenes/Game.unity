@@ -2089,6 +2089,9 @@ MonoBehaviour:
   spikeAcceleration: 2
   spikePoint: {fileID: 591947206}
   spikeRadius: 0.4
+  ball: {fileID: 0}
+  spikeForceX: 3
+  spikeForceY: 3
   attackMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -2644,7 +2647,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b74fbb6f24dc9fd42afbd907ce23a331, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: 5
 --- !u!1 &1018675973
 GameObject:
   m_ObjectHideFlags: 0
@@ -3715,6 +3717,9 @@ MonoBehaviour:
   spikeAcceleration: 2
   spikePoint: {fileID: 1018675974}
   spikeRadius: 0.4
+  ball: {fileID: 0}
+  spikeForceX: 3
+  spikeForceY: 3
   attackMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -5400,7 +5405,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b74fbb6f24dc9fd42afbd907ce23a331, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: 3
 --- !u!1 &1716934136
 GameObject:
   m_ObjectHideFlags: 0

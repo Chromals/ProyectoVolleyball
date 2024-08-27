@@ -46,8 +46,6 @@ public class CharacterController2D : MonoBehaviour
     [SerializeField]
     float spikeRadius;
 
-    [SerializeField] 
-    Transform ball;
     [SerializeField]
     float spikeForceX;
     [SerializeField]
@@ -77,7 +75,7 @@ public class CharacterController2D : MonoBehaviour
         _gravityY = Physics2D.gravity.y;
         ANIMATION_SPEED = Animator.StringToHash("speed");
         ANIMATION_FORCE = Animator.StringToHash("force");
-        ANIMATION_SPIKE = Animator.StringToHash("smash"); // Rema
+        ANIMATION_SPIKE = Animator.StringToHash("smash");
 
         ANIMATION_FALL = Animator.StringToHash("fall");
     }
@@ -215,10 +213,17 @@ public class CharacterController2D : MonoBehaviour
         _isGrounded = true;
     }
 
+
     public void Spike()
     {
+        if(!_isActive) return;
+
+        _animator.SetTrigger(ANIMATION_SPIKE);
+    }
 
 
+    public void Spike(float force)
+    {
         Collider2D[] colliders = Physics2D.OverlapCircleAll(spikePoint.position, spikeRadius, attackMask);
         foreach (Collider2D collider in colliders)
         {
